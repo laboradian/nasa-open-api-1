@@ -2,7 +2,7 @@ import page from 'page';
 import indexModule from './index';
 import "../less/app.less";
 
-page('/', indexModule);
+page('*', indexModule);
 
 page({
   click: false,
