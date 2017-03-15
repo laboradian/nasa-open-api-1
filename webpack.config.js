@@ -1,3 +1,6 @@
+//process.traceDeprecation = true
+process.noDeprecation = true
+
 module.exports = {
   // configuration
   entry: {
@@ -9,22 +12,24 @@ module.exports = {
     filename: "[name].js"
   },
   module: {
-    preLoaders: [
-      {
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "eslint-loader"
-      }
-    ],
-    loaders: [
+    rules: [
       /*{
         test: /\.css$/,
         loader: "style!css"
       },*/
       {
+        enforce: 'pre',
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "eslint-loader",
+        options: {
+          configFile: './.eslintrc'
+        }
+      },
+      {
         test: /\.less$/,
         /*exclude: /(node_modules\/fonts)/,*/
-        loader: "style!css!less"
+        use: ["style-loader", "css-loader", "less-loader"]
       },
       {
         test: /\.(png|woff|woff2|eot|ttf|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -41,10 +46,7 @@ module.exports = {
     ]
   },
   resolve: {
-    extensions: ['', '.js', '.css']
-  },
-  eslint: {
-    configFile: './.eslintrc'
+    extensions: ['.js', '.css']
   }
 };
 
